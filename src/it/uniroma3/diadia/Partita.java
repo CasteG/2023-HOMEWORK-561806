@@ -65,5 +65,6 @@ public class Partita {
 	public Giocatore getGiocatore() {
 		return this.giocatore;
 	}
+
 }
 	
