@@ -17,13 +17,15 @@ public class Partita {
 	private Labirinto labirinto;
 	private Giocatore giocatore;
 	private Stanza stanzaCorrente;
+	private IO io;
 	private boolean finita;
 	
-	public Partita(){
+	public Partita(IO io){
 		this.labirinto = new Labirinto();
 		this.giocatore = new Giocatore();
 		this.stanzaCorrente = this.labirinto.getStanzaIniziale();
 		this.finita = false;
+		this.io = io;
 	}
 	
 	/**
@@ -64,6 +66,10 @@ public class Partita {
 
 	public Giocatore getGiocatore() {
 		return this.giocatore;
+	}
+	
+	public IO getIo() {
+		return this.io;
 	}
 
 }

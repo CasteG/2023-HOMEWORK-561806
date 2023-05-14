@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class FabbricaDiComandiFisarmonica implements FabbricaDiComandi {
 	
-	private static final String[] elencoComandi = {"vai", "prendi", "posa", "guarda", "aiuto", "fine"};
+	private static final String[] elencoComandi = {"vai", "prendi", "posa", "guarda", "borsaFiltroPeso", "borsaFiltroNome", "aiuto", "fine"};
 	
 	@Override
 	public Comando costruisciComando(String istruzione) {
@@ -27,11 +27,15 @@ public class FabbricaDiComandiFisarmonica implements FabbricaDiComandi {
 		else if(nomeComando.equals("posa"))
 			comando = new ComandoPosa();
 		else if(nomeComando.equals("aiuto"))
-			comando = new ComandoAiuto(this.elencoComandi);
+			comando = new ComandoAiuto(elencoComandi);
 		else if(nomeComando.equals("fine"))
 			comando = new ComandoFine();
 		else if(nomeComando.equals("guarda"))
 			comando = new ComandoGuarda();
+		else if(nomeComando.equals("borsaFiltroPeso"))
+			comando = new ComandoGuardaBorsaPeso();
+		else if(nomeComando.equals("borsaFiltroNome"))
+			comando = new ComandoGuardaBorsaNome();
 		else comando = new ComandoNonValido();
 		comando.setParametro(parametro);
 		

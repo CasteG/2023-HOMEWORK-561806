@@ -10,10 +10,12 @@ import it.uniroma3.diadia.ambienti.Stanza;
 public class PartitaTest {
 	
 	private Partita partitaTest;
+	private IOConsole ioConsole;
 	
 	@Before
 	public void setUp() {
-		this.partitaTest = new Partita();
+		this.ioConsole = new IOConsole();
+		this.partitaTest = new Partita(ioConsole);
 	}
 
 	@Test

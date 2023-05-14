@@ -51,4 +51,7 @@ public class Attrezzo {
 		return this.getNome()+" ("+this.getPeso()+"kg)";
 	}
 
+	public int compareTo(Attrezzo that) {
+		return this.getNome().compareTo(that.getNome());
+	}
 }

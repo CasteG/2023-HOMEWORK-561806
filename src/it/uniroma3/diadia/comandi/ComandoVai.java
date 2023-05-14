@@ -6,6 +6,7 @@ import it.uniroma3.diadia.ambienti.Stanza;
 public class ComandoVai implements Comando {
 	
 	private String direzione;
+	private String nome = "Vai";
 	private IO io;
 
 	/**
@@ -13,6 +14,8 @@ public class ComandoVai implements Comando {
 	 */
 	@Override
 	public void esegui(Partita partita) {
+		this.io = partita.getIo();
+		
 		Stanza stanzaCorrente = partita.getStanzaCorrente();
 		Stanza prossimaStanza = null;
 		if(this.direzione == null) {
@@ -34,9 +37,15 @@ public class ComandoVai implements Comando {
 	public void setParametro(String parametro) {
 		this.direzione = parametro;
 	}
+
+	@Override
+	public String getNome() {
+		return this.nome;
+	}
+
+	@Override
+	public String getParametro() {
+		return this.direzione;
+	}
 	
-//	@Override
-//	public void setParametro(String parametro) {
-//		this.direzione = parametro;
-//	}
 }
