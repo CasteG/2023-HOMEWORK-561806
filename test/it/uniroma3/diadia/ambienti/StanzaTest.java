@@ -2,46 +2,56 @@ package it.uniroma3.diadia.ambienti;
 
 import static org.junit.Assert.*;
 
+import java.util.Set;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 public class StanzaTest {
 	
-	private Stanza vuota;
-	private Stanza stanzaNonVuota;
-	private Attrezzo libro;
+	private Stanza stanza;
 
-	@Before
+	@Before 
 	public void setUp() {
-		this.vuota = new Stanza("Stanza vuota");
-		this.stanzaNonVuota = new Stanza("Stanza non vuota");
-		this.libro = new Attrezzo("libro",2);
-		this.stanzaNonVuota.addAttrezzo(libro);
+		this.stanza = new Stanza("testStanza");
 	}
-
+	
 	@Test
-	public void testAddAttrezzo() {
-		assertFalse(this.vuota.hasAttrezzo("lanterna"));
-		this.vuota.addAttrezzo(new Attrezzo("osso",1));
-		assertTrue(this.vuota.hasAttrezzo("osso"));
+	public void testImpostaStanzaAdiacente() {
+		Stanza adiacente = newStanzaESetAdiacente(this.stanza, "StanzaAdiacente", "nord");
+		assertEquals(adiacente, this.stanza.getStanzaAdiacente("nord"));
 	}
 
+
+	
+	private void assertNotContains(Set<String> set, String nuovaDirezione) {
+		boolean contiene = false;
+		for(String direzione: set)
+			if(direzione!=null && direzione.equals(nuovaDirezione))
+				contiene = true;
+		assertFalse(contiene);
+	}
+	
 	@Test
-	public void testHasAttrezzo() {
-		assertFalse(this.vuota.hasAttrezzo("lanterna"));
+	public void testAddrezzoSingolo() {
+		Attrezzo attrezzo = new Attrezzo("Lanterna", 5);
+		this.stanza.addAttrezzo(attrezzo);
+		assertEquals(attrezzo, this.stanza.getAttrezzo("Lanterna"));
 	}
-
+	
+	@Test 
+	public void testHasAttrezzoStanzaVuota() {
+		assertFalse(this.stanza.hasAttrezzo("Lanterna"));
+	}
+	
 	@Test
-	public void testGetAttrezzo() {
-		assertEquals(this.libro, this.stanzaNonVuota.getAttrezzo("libro"));
+	public void testHasAttrezzoInesistente() {
+		Attrezzo attrezzo = new Attrezzo("Lanterna", 5);
+		this.stanza.addAttrezzo(attrezzo);
+		assertFalse(this.stanza.hasAttrezzo("Inesistente"));
 	}
-
-	@Test
-	public void testRemoveAttrezzo() {
-		assertTrue(this.stanzaNonVuota.removeAttrezzo(libro));		//perchè removeAttrezzo restituisce true se va a buon fine
-		assertFalse(this.stanzaNonVuota.hasAttrezzo("libro"));
-	}
-
+	
 }

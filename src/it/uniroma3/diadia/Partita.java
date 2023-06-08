@@ -1,5 +1,4 @@
 package it.uniroma3.diadia;
-
 import it.uniroma3.diadia.ambienti.Labirinto;
 import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.giocatore.Giocatore;
@@ -14,18 +13,28 @@ import it.uniroma3.diadia.giocatore.Giocatore;
 
 public class Partita {
 
+	private Stanza stanzaCorrente;
+	private boolean finita;
 	private Labirinto labirinto;
 	private Giocatore giocatore;
-	private Stanza stanzaCorrente;
-	private IO io;
-	private boolean finita;
 	
-	public Partita(IO io){
-		this.labirinto = new Labirinto();
-		this.giocatore = new Giocatore();
-		this.stanzaCorrente = this.labirinto.getStanzaIniziale();
+	public Partita(Labirinto labirinto){
 		this.finita = false;
-		this.io = io;
+		this.labirinto = labirinto;
+		this.stanzaCorrente = this.labirinto.getStanzaIniziale();
+		this.giocatore = new Giocatore();
+	}
+
+	public Stanza getStanzaVincente() {
+		return this.labirinto.getStanzaVincente();
+	}
+
+	public void setStanzaCorrente(Stanza stanzaCorrente) {
+		this.stanzaCorrente = stanzaCorrente;
+	}
+
+	public Stanza getStanzaCorrente() {
+		return this.stanzaCorrente;
 	}
 	
 	/**
@@ -33,7 +42,7 @@ public class Partita {
 	 * @return vero se partita vinta
 	 */
 	public boolean vinta() {
-		return this.getStanzaCorrente()== this.labirinto.getStanzaVincente();
+		return this.getStanzaCorrente()== this.getStanzaVincente();
 	}
 
 	/**
@@ -51,26 +60,25 @@ public class Partita {
 	public void setFinita() {
 		this.finita = true;
 	}
-	
-	public Stanza getStanzaCorrente() {
-		return this.stanzaCorrente;
-	}
-	
-	public void setStanzaCorrente(Stanza stanzaCorrente) {
-		this.stanzaCorrente = stanzaCorrente;
-	}
-	
-	public Labirinto getLabirinto() {
-		return this.labirinto;
+
+	public int getCfu() {
+		return this.giocatore.getCfu();
 	}
 
+	public void setCfu(int cfu) {
+		this.giocatore.setCfu(cfu);		
+	}	
+	
 	public Giocatore getGiocatore() {
 		return this.giocatore;
 	}
-	
-	public IO getIo() {
-		return this.io;
+
+	public boolean giocatoreIsVivo() {
+		return this.giocatore.getCfu() > 0;
 	}
 
+	public void setLabirinto(Labirinto labirinto) {
+		this.labirinto = labirinto;
+	}
 }
-	
+ 

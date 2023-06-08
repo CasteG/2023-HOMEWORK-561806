@@ -1,43 +1,40 @@
 package it.uniroma3.diadia.ambienti;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import it.uniroma3.diadia.ambienti.Stanza;
-import it.uniroma3.diadia.ambienti.StanzaBuia;
-import it.uniroma3.diadia.attrezzi.Attrezzo;
+import it.uniroma3.diadia.fixture.Fixture;
 
 public class StanzaBuiaTest {
 
-	Stanza stanza1 = new StanzaBuia("Stanza buia", "lanterna");
-	Attrezzo lanterna = new Attrezzo("lanterna", 5);
-	Attrezzo osso = new Attrezzo("osso", 5);
-
-
-	@Test
-	public void testHasAttrezzoLucente() {
-		this.stanza1.addAttrezzo(lanterna);
-		assertTrue(this.stanza1.hasAttrezzo("lanterna"));
+	private static final String ATTREZZO_LUCE_TEST = "attrezzoLuceTest";
+	private StanzaBuia stanzaBuia;
+	
+	@Before
+	public void setUp() {
+		this.stanzaBuia = new StanzaBuia("StanzaBuia", ATTREZZO_LUCE_TEST);
 	}
 
 	@Test
-	public void testNotHasAttrezzoLucente() {
-		this.stanza1.addAttrezzo(osso);
-		assertFalse(this.stanza1.hasAttrezzo("lanterna"));
+	public void testGetDescrizioneLuceNonPresente() {
+		assertEquals(StanzaBuia.DESCRIZIONE_STANZA_BUIA, this.stanzaBuia.getDescrizione());
 	}
 	
 	@Test
-	public void testGetDescrizioneBuio() {
-		assertEquals("Qui c'è un buio pesto...", this.stanza1.getDescrizione());
+	public void testGetDescrizioneConLuce() {
+		Fixture.creaAttrezzoEAggiungiAStanza(this.stanzaBuia, ATTREZZO_LUCE_TEST, 1);
+		assertNotEquals(StanzaBuia.DESCRIZIONE_STANZA_BUIA, this.stanzaBuia.getDescrizione());
 	}
 	
 	@Test
-	public void testGetDescrizioneNormale() {
-		this.stanza1.addAttrezzo(lanterna);
-		assertEquals("L'attrezzo " + lanterna.getNome()+ "ha illuminato la stanza", this.stanza1.getDescrizione());
+	public void testGetAttrezzoInesistente() {
+		Fixture.creaAttrezzoEAggiungiAStanza(this.stanzaBuia, "attrezzoDiTest", 1);
+		assertNull(this.stanzaBuia.getAttrezzo("inesistente"));		
 	}
-
+	
 
 }

@@ -1,56 +1,72 @@
 package it.uniroma3.diadia;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import it.uniroma3.diadia.ambienti.Labirinto;
 import it.uniroma3.diadia.ambienti.Stanza;
+
 
 public class PartitaTest {
 	
-	private Partita partitaTest;
-	private IOConsole ioConsole;
+	private Partita partita;
+	private Labirinto labirinto;
 	
 	@Before
 	public void setUp() {
-		this.ioConsole = new IOConsole();
-		this.partitaTest = new Partita(ioConsole);
-	}
-
-	@Test
-	public void testVinta() {
-		this.partitaTest.setStanzaCorrente(this.partitaTest.getLabirinto().getStanzaVincente());
-		assertTrue(this.partitaTest.vinta());
+		this.labirinto = Labirinto.newBuilder()
+				.addStanzaIniziale("iniziale")
+				.addStanzaVincente("vincente")
+				.getLabirinto();
+		this.partita = new Partita(this.labirinto);
 	}
 	
 	@Test
-	public void testVintaSeStanzaCorrenteDiversaDaVincente() {
-		this.partitaTest.setStanzaCorrente(new Stanza("N1"));
-		assertFalse(this.partitaTest.vinta());
+	public void testGetStanzaVincenteNotNull() {
+		assertNotNull(this.partita.getStanzaVincente());
 	}
 	
 	@Test
-	public void testVintaSeAppenaIniziata() {
-		assertFalse(this.partitaTest.vinta());
-	}
-	
-
-	@Test
-	public void testIsFinitaSeCfuTerminati() {
-		this.partitaTest.getGiocatore().setCfu(0);
-		assertTrue(this.partitaTest.isFinita());
+	public void testVintaSeStanzaCorrenteEVincente() {
+		this.partita.setStanzaCorrente(this.partita.getStanzaVincente());
+		assertTrue(this.partita.vinta());
 	}
 	
 	@Test
-	public void testIsFinitaSeVinta() {
-		this.partitaTest.setStanzaCorrente(this.partitaTest.getLabirinto().getStanzaVincente());		
-		assertTrue(this.partitaTest.isFinita());
+	public void testNonVintaSeStanzaCorrenteNonEVincente() {
+		this.partita.setStanzaCorrente(new Stanza("NonVincente"));
+		assertFalse(this.partita.vinta());
 	}
 	
 	@Test
-	public void testIsFinitaSeAppenaIniziata() {
-		assertFalse(this.partitaTest.isFinita());
+	public void testNonVintaInizioPartita() {
+		assertFalse(this.partita.vinta());
 	}
 	
+	@Test
+	public void testFinitaSeVinta() {
+		this.partita.setStanzaCorrente(this.partita.getStanzaVincente());
+		assertTrue(this.partita.isFinita());
+	}
+	
+	@Test
+	public void testFinitaSeEsplicitamenteSettato() {
+		this.partita.setFinita();
+		assertTrue(this.partita.isFinita());
+	}
+	
+	@Test
+	public void testFinitaSeCFUFiniti() {
+		this.partita.setCfu(0);
+		assertTrue(this.partita.isFinita());
+	}
+	
+	@Test
+	public void testNonFinitaInizioPartita() {
+		assertFalse(this.partita.isFinita());
+	}
 }

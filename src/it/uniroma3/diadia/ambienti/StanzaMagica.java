@@ -1,4 +1,5 @@
 package it.uniroma3.diadia.ambienti;
+
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 public class StanzaMagica extends Stanza {
@@ -15,16 +16,14 @@ public class StanzaMagica extends Stanza {
 		super(nome);
 		this.contatoreAttrezziPosati = 0;
 		this.sogliaMagica = soglia;
-	}
+	}	
 
 	@Override
 	public boolean addAttrezzo(Attrezzo attrezzo) {
 		this.contatoreAttrezziPosati++;
 		if (this.contatoreAttrezziPosati>this.sogliaMagica)
 			attrezzo = this.modificaAttrezzo(attrezzo);
-		/* se vuoi richiamare il metodo della superclasse devi
-		fare come segue sennò richiama sè stesso all'infinito */
-		return super.addAttrezzo(attrezzo);		
+		return super.addAttrezzo(attrezzo);
 	}
 
 	private Attrezzo modificaAttrezzo(Attrezzo attrezzo) {
@@ -32,8 +31,7 @@ public class StanzaMagica extends Stanza {
 		int pesoX2 = attrezzo.getPeso() * 2;
 		nomeInvertito = new StringBuilder(attrezzo.getNome());
 		nomeInvertito = nomeInvertito.reverse();
-		attrezzo = new Attrezzo(nomeInvertito.toString(),
-				pesoX2);
+		attrezzo = new Attrezzo(nomeInvertito.toString(),pesoX2);
 		return attrezzo;
 	}
 

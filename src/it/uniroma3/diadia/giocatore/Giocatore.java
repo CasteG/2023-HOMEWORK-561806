@@ -1,25 +1,19 @@
 package it.uniroma3.diadia.giocatore;
 
-
-/**
- * Classe ha la responsabilità di gestire i CFU del giocatore e
- * di memorizzare gli attrezzi in un oggetto istanza della classe
- * Borsa
- * @author caste
- *
- */
+import it.uniroma3.diadia.ConfigurazioniIniziali;
 
 public class Giocatore {
-	
-	static final private int CFU_INIZIALI = 20;
+
+	static final public int CFU_INIZIALI = ConfigurazioniIniziali.getCFU();
+
 	private int cfu;
 	private Borsa borsa;
 	
 	public Giocatore() {
 		this.cfu = CFU_INIZIALI;
-		this.borsa= new Borsa();
+		this.borsa = new Borsa();
 	}
-	
+
 	public int getCfu() {
 		return cfu;
 	}
@@ -27,9 +21,14 @@ public class Giocatore {
 	public void setCfu(int cfu) {
 		this.cfu = cfu;
 	}
-	
+
 	public Borsa getBorsa() {
 		return this.borsa;
+	}
+	
+	@Override
+	public String toString() {
+		return "CFU: " + this.cfu + "\nBorsa: " + this.borsa.toString();
 	}
 	
 }

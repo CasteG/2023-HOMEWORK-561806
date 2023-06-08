@@ -1,6 +1,6 @@
 package it.uniroma3.diadia.attrezzi;
 
-
+import it.uniroma3.diadia.ambienti.Stanza;
 
 /**
  * Una semplice classe che modella un attrezzo.
@@ -12,7 +12,7 @@ package it.uniroma3.diadia.attrezzi;
  * @see Stanza
  * @version base
  */
-public class Attrezzo {
+public class Attrezzo implements Comparable<Attrezzo> {
 
 	private String nome;
 	private int peso;
@@ -42,6 +42,10 @@ public class Attrezzo {
 	public int getPeso() {
 		return this.peso;
 	}
+	
+	public void setPeso(int p) {
+		this.peso = p;
+	}
 
 	/**
 	 * Restituisce una rappresentazione stringa di questo attrezzo
@@ -51,7 +55,23 @@ public class Attrezzo {
 		return this.getNome()+" ("+this.getPeso()+"kg)";
 	}
 
-	public int compareTo(Attrezzo that) {
-		return this.getNome().compareTo(that.getNome());
+	@Override
+	public boolean equals(Object o) {
+		Attrezzo that = (Attrezzo)o;
+			return this.getNome().equals(that.getNome());
 	}
+
+	@Override
+	public int hashCode() {
+		return this.getNome().hashCode();
+	}
+
+	@Override
+	public int compareTo(Attrezzo that) {
+		int cmp = this.getPeso()-that.getPeso();
+		if(cmp==0)
+			cmp = this.getNome().compareTo(that.getNome());
+		return cmp;
+	}
+
 }
